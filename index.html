@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code + DeepSeek + Obsidian：从零搭建 AI 知识库</title>
+    <style>
+        body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.8; color: #333; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 6px; overflow-x: auto; }
+        code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+        pre code { background: none; padding: 0; }
+        table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #f5f5f5; }
+        img { max-width: 100%; }
+        h1 { border-bottom: 2px solid #6c5ce7; padding-bottom: 10px; }
+        h2 { border-left: 4px solid #6c5ce7; padding-left: 12px; margin-top: 40px; }
+        h3 { margin-top: 30px; }
+        blockquote { border-left: 4px solid #ddd; margin: 0; padding: 10px 20px; background: #fafafa; }
+        hr { border: none; border-top: 1px solid #eee; margin: 40px 0; }
+        .badge { display: inline-block; background: #6c5ce7; color: white; padding: 2px 10px; border-radius: 4px; font-size: 0.8em; margin-right: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Claude Code + DeepSeek + Obsidian：从零搭建 AI 知识库</h1>
+    <blockquote>完整教程：部署环境 → 挂载模型 → 安装 Obsidian → 建立知识库体系</blockquote>
+
+    <hr>
+
+    <h2>第一部分：环境部署</h2>
+
+    <h3>第一步：安装 Node.js</h3>
+    <p>Claude Code 依赖 Node.js 环境，需要先装它。</p>
+    <p><strong>下载地址：</strong> <a href="https://nodejs.org/en/download/">https://nodejs.org/en/download/</a></p>
+    <p>安装完成后，打开终端验证：</p>
+    <pre><code>node --version
+npm --version</code></pre>
+    <p>两条命令都应该返回版本号。</p>
+
+    <hr>
+
+    <h3>第二步：安装 Claude Code</h3>
+    <p>在终端执行：</p>
+    <pre><code>sudo npm install -g @anthropic-ai/claude-code</code></pre>
+    <p><strong>Windows 用户：</strong> 不要加 <code>sudo</code>。以管理员身份打开终端，直接执行 <code>npm install -g @anthropic-ai/claude-code</code>。</p>
+
+    <hr>
+
+    <h3>第三步：验证安装</h3>
+    <pre><code>claude --version</code></pre>
+    <p>如果显示了版本号（比如 <code>0.x.x</code>），说明 Claude Code 安装成功。</p>
+
+    <hr>
+
+    <h3>第四步：下载 CC-Switch</h3>
+    <p>CC-Switch 是一个模型网关层，让 Claude Code 可以调用非 Claude 的模型（比如 DeepSeek）。</p>
+    <p><strong>下载地址：</strong> <a href="https://ccswitch.io/zh/">https://ccswitch.io/zh/</a></p>
+
+    <hr>
+
+    <h3>第五步：获取 DeepSeek API Key</h3>
+    <ol>
+        <li>打开 DeepSeek 开发者平台：<a href="https://platform.deepseek.com/api_keys">https://platform.deepseek.com/api_keys</a></li>
+        <li>进入 API Keys 页面 → 创建一个新的 Key</li>
+        <li>复制保存好（关掉页面就看不到了）</li>
+    </ol>
+    <p>DeepSeek 的 API 价格很低，能力也够用。一般充 10 块钱可以用很久很久。</p>
+
+    <hr>
+
+    <h3>第六步：把 API Key 关联到 CC-Switch</h3>
+    <ol>
+        <li>启动 CC-Switch（双击或终端运行）</li>
+        <li>在配置界面里：添加 DeepSeek → 粘贴 API Key → 选择模型</li>
+        <li>保存配置</li>
+    </ol>
+
+    <hr>
+
+    <h3>第七步：测试</h3>
+    <p>确认 CC-Switch 已启动，然后终端运行 <code>claude</code> 启动 Claude Code，随便问一个问题。</p>
+    <p>如果能正常回复 → ✅ 全部通了</p>
+
+    <hr>
+
+    <h2>第二部分：安装 Obsidian</h2>
+
+    <h3>第一步：下载并安装 Obsidian</h3>
+    <p><strong>下载地址：</strong> <a href="https://obsidian.md/download">https://obsidian.md/download</a></p>
+
+    <h3>第二步：打开 Obsidian，创建库</h3>
+    <p>首次打开选择「新建库」，起个名字。打开的界面：左侧文件列表、中间编辑器、右侧面板。</p>
+
+    <hr>
+
+    <h2>第三部分：建立知识库体系</h2>
+
+    <h3>3.1 笔记的沉淀分区（PARA 体系）</h3>
+    <p>PARA 是 Tiago Forte 提出的知识管理方法，把笔记分成四个区：</p>
+    <table>
+        <tr><th>分区</th><th>放什么</th><th>例子</th></tr>
+        <tr><td><strong>1. Projects（项目）</strong></td><td>有明确目标的短期任务</td><td>视频脚本、教程</td></tr>
+        <tr><td><strong>2. Areas（领域）</strong></td><td>长期关注的责任范围</td><td>健身、滑雪、工作</td></tr>
+        <tr><td><strong>3. Resources（资源）</strong></td><td>参考资料</td><td>电影推荐、书单</td></tr>
+        <tr><td><strong>4. Archives（归档）</strong></td><td>已完成的内容</td><td>已发布的教程</td></tr>
+    </table>
+
+    <h3>3.2 知识图谱与笔记关联</h3>
+    <p>用 <code>[[笔记名]]</code> 链接到另一篇笔记。当笔记之间有了链接，打开图谱视图，你会看到一张不断延伸的知识网络。</p>
+
+    <h3>3.3 插件与技能结合</h3>
+    <p>推荐插件：Excalidraw（画图）、Templater（模板）、Tasks（待办）、Dataview（查询）、Obsidian Git（备份）。</p>
+
+    <hr>
+
+    <h2>第四部分：这套体系的核心优势</h2>
+    <ol>
+        <li><strong>笔记存在你的硬盘里，不会丢</strong> — 纯本地 Markdown，不是别人的服务器</li>
+        <li><strong>不需要维护结构</strong> — PARA 帮你分好了</li>
+        <li><strong>笔记之间自动产生关联</strong> — 双链 + 图谱，越记越有体系</li>
+        <li><strong>AI 可以直接操作你的笔记</strong> — 这是 Obsidian 最根本的优势</li>
+    </ol>
+
+    <hr>
+    <p style="text-align:center;color:#999;font-size:0.9em;">— 完 —</p>
+</body>
+</html>
